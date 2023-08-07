@@ -1,0 +1,13 @@
+*** Amazon Integration for WooCommerce Changelog ***
+
+2023-03-06 - version 1.0.3
+* [Added] Implement WP REST API for amazon endpoints.
+* [Fixed] Custom/global attribute missing issue with variations.
+* [Fixed] Missing info with parent product.
+* [Added] Implement all supported amazon marketplaces.
+* [Added] Implement delete listing feed action.
+* [Added] Implement Amazon order details modal in "Orders" section.
+* [Fixed] Feed actions, Quick response and Amazon order details modal preload issue.
+* [Fixed] Manage orders listing table data with multiple accounts.
+* [Fixed] Shipment update issue with multiple amazon account orders.
+* [Fixed] Prevent wpdb::prepare issue due to pass more that 1 argument in profile template.
