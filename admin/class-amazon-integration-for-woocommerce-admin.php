@@ -917,7 +917,7 @@ class Amazon_Integration_For_Woocommerce_Admin {
 			 *
 			* @since  1.0.0
 			*/  
-			do_action( 'ced_sales_channel_include_template' );
+			do_action( 'ced_sales_channel_include_template', $_GET['channel'] );
 		}
 	
 	}
@@ -1026,11 +1026,15 @@ class Amazon_Integration_For_Woocommerce_Admin {
 	*
 	*Function for displaying default page
 	*/
-	public function ced_amazon_accounts_page() {
-		$fileAccounts = CED_AMAZON_DIRPATH . 'admin/partials/ced-amazon-accounts.php';
-		if ( file_exists( $fileAccounts ) ) {
-			require_once $fileAccounts;
+	public function ced_amazon_accounts_page( $channel = 'amazon' ) {
+
+		if( 'amazon' == $channel){
+			$fileAccounts = CED_AMAZON_DIRPATH . 'admin/partials/ced-amazon-accounts.php';
+			if ( file_exists( $fileAccounts ) ) {
+				require_once $fileAccounts;
+			}
 		}
+	
 	}
 
 	/** 
