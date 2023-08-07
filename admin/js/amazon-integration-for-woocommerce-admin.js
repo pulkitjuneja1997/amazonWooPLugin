@@ -1277,52 +1277,6 @@
 	});
 
 
-	// Load product specific all feeds with relevant action in feed table modal
-	jQuery(document).on('click', '.product-feed-actions', function (e) {
-
-		//e.preventDefault();
-		jQuery('#wpbody-content').append(amazon_loader_overlay);
-		jQuery( '.product-feed-response-modal' ).html( '' );
-
-		let product_id = $(this).attr("data-prod-id");
-		let seller_id  = urlParams.get('seller_id') ? urlParams.get('seller_id') : '';
-		let user_id    = urlParams.get('user_id') ? urlParams.get('user_id') : '';
-		if ( seller_id == '' ) {
-			
-			jQuery( '.product-feed-response-modal' ).html( '<b>Seller id is missing from url!</b>' );
-			jQuery('#wpbody-content .ced_amazon_overlay').remove();
-			return false;
-		}
-		if ( user_id == '' ) {
-			
-			jQuery( '.product-feed-response-modal' ).html( '<b>User id is missing from url!</b>' );
-			jQuery('#wpbody-content .ced_amazon_overlay').remove();
-			return false;
-		}
-
-		jQuery.ajax(
-			{
-				type: 'post',
-				url: ajaxUrl,
-				data: {
-					ajax_nonce: ajaxNonce,
-					product_id: product_id,
-					seller_id: seller_id,
-					user_id: user_id,
-					action: 'ced_amazon_product_specific_feeds'
-				},
-				success: function (response) {
-					jQuery('#wpbody-content .ced_amazon_overlay').remove();
-					
-					jQuery( '.product-feed-response-modal' ).append( response.data );
-					jQuery( '#feedActionsModal' ).modal( 'show' );
-				}
-			}
-		);
-
-	});
-
-
 	// Load amazon order details with all relevant amazon data 
 	jQuery(document).on('click', '.amazon-order-detail', function (e) {
 

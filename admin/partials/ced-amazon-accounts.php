@@ -167,6 +167,7 @@ if ( ! $subscriptionVerified ) {
 											$eu_marketplaces    = '';
 											$fe_marketplaces    = ''; 
 											$ced_amazon_regions = array(
+
 											'A2EUQ1WTGCTBG2' => array(
 												'country_name'  => 'Canada', 
 												'country_value' => 'CA',
@@ -374,8 +375,6 @@ if ( ! $subscriptionVerified ) {
 
 								   // wp_redirect( get_admin_url() . 'admin.php?page=sales_channel&channel=amazon&user_id=' . $user_id . '&seller_id=' . $seller_id );    
 								   wp_redirect( get_admin_url() . 'admin.php?page=sales_channel&channel=amazon&section=setup-amazon' );
-
-
 							
 							} 
 							?>

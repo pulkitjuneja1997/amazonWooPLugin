@@ -4,70 +4,93 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
+$file = CED_AMAZON_DIRPATH . 'admin/partials/amazonRegions.php';
+if( file_exists( $file ) ){
+    require_once $file;
+}
+
 ?>
 
 
 <style type="text/css">
-		table tbody tr td {
-			border-bottom: 1px solid #eee;
-		}
+			table tbody tr td {
+				border-bottom: 1px solid #eee;
+			}
+			.widefat td {
+				vertical-align: middle;
+				padding: 16px 10px;
+			}
+			table{
+				border: 1px solid #eee;
+			}
+			span.ced-circle {
+				height: 10px;
+				width: 10px;
+				position: absolute;
+				left: 5px;
+				background: #1ED14B;
+				border-radius: 50%;
+				border: 1px solid #75757580;
+				top: 17px;
+			}
+			.ced-connected-button-wrap a {
+				background: #EFF9F1;
+				padding: 16px 7px;
+				color: #1E1E1E;
+				position: relative;
+				content: '';
+				border-radius: 2px;
+				padding-left: 22px;
+				font-size: 12px;
+			}
+			.ced-pending-button-wrap span.ced-circle {
+				height: 10px;
+				width: 10px;
+				position: absolute;
+				left: 5px;
+				background: #72AEE6;
+				border-radius: 50%;
+				border: 1px solid #75757580;
+				top: 17px;
+			}
+			.ced-pending-button-wrap a {
+				background: #EFF4F9;
+				padding: 16px 7px;
+				color: #1E1E1E;
+				position: relative;
+				content: '';
+				border-radius: 2px;
+				padding-left: 22px;
+				font-size: 12px;
+			}
+			.ced-account-head div, .ced-account-body div {
+				width: 50%;
+				padding: 10px;
+			}
+			.ced-acount-body-label p {
+				margin: 0.5em 0 !important;
+				font-size: 14px !important;
+			}
+			.ced-account-head, .ced-account-body {
+				display: flex;
+				align-items: center;
+			}
+			.ced-account-label p {
+				font-weight: 700;
+				color: #1E1E1E !important;
+				margin: 0.5em 0 !important;
+				font-size: 14px !important;
+			}
 
-		.widefat td {
-			vertical-align: middle;
-			padding: 16px 10px;
-		}
+			.wc-importer-error-log{
+				background: #fff;
+			}
 
-		table {
-			border: 1px solid #eee;
-		}
+			.wc-importer-error-log:hover{
+				background: #fff;
+			}
 
-		/* span.ced-circle {
-			
-			height: 15px;
-			width: 15px;
-			position: absolute;
-			left: 21px;
-			background: #1ED14B;
-			border-radius: 50%;
-			border: 1px solid #75757580;
-			top: 17px;
-		}
-
-		.ced-connected-button-wrap a {
-			background: #EFF9F1;
-			padding: 13px 30px;
-			color: #1E1E1E;
-			position: relative;
-			content: '';
-			border-radius: 2px;
-			padding-left: 50px;
-			font-size: 16px;
-			
-		} */
-
-		span.ced-circle {
-			/* padding: 4px; */
-			height: 10px;
-			width: 10px;
-			position: absolute;
-			left: 5px;
-			background: #1ED14B;
-			border-radius: 50%;
-			border: 1px solid #75757580;
-			top: 17px;
-		}
-		.ced-connected-button-wrap a {
-			background: #EFF9F1;
-			padding: 16px 7px;
-			color: #1E1E1E;
-			position: relative;
-			content: '';
-			border-radius: 2px;
-			padding-left: 22px;
-			font-size: 12px;
-			/* align-items: center; */
-		}
-	</style>
+</style>
 
 	<div class="wrap woocommerce">
 		<div class="woocommerce-progress-form-wrapper">
@@ -117,11 +140,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 											$ced_amazon_sellernext_shop_ids = get_option( 'ced_amazon_sellernext_shop_ids', array() );
 											if( !empty($ced_amazon_sellernext_shop_ids) ){ ?>
 
-											<a class="row-title"
-											href="http://cedcommerce.local/wp-admin/post.php?post=319&amp;action=edit"><?php echo esc_html__( count($ced_amazon_sellernext_shop_ids) ,'ced-amazon'); ?> account
-											connected</a>
-
-
+											<a class="row-title woocommerce-importer-done-view-errors" href="" ><?php echo esc_html__( count($ced_amazon_sellernext_shop_ids) ,'ced-amazon'); ?> account
+											connected <span class="dashicons dashicons-arrow-down-alt2"></span></a>  
 
 											<?php
 
@@ -138,7 +158,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 								
 									<?php
 									if ($navigation['is_installed'] && empty($ced_amazon_sellernext_shop_ids) ) {
-										$url = get_admin_url() . 'admin.php?page=sales_channel&channel=amazon' ;
+										// $url = get_admin_url() . 'admin.php?page=sales_channel&channel=amazon' ;
+										$url = ced_get_navigation_url( $navigation['menu_link']);
 										?>
 										<td class="is_in_stock column-is_in_stock" data-colname="Stock">
 										<a href="<?php echo esc_url($url); ?>"class="components-button is-secondary">Connect</a> </td>
@@ -156,7 +177,108 @@ if ( ! defined( 'ABSPATH' ) ) {
 								
 							</tr>
 
-							
+							<?php
+								if( 'amazon' == $navigation['menu_link'] ){
+									$ced_amazon_sellernext_shop_ids = get_option( 'ced_amazon_sellernext_shop_ids', array() );
+									if( !empty($ced_amazon_sellernext_shop_ids) ){ ?>
+
+									<tr class="wc-importer-error-log" style="display:none;">
+										<td colspan="4">
+											<section class="wc-importer-error-log" style="display:none;">
+												<div class="ced-account-connected-form">
+													<div class="ced-account-head">
+														<div class="ced-account-label">
+															<p>Account Details</p>
+														</div>
+														<div class="ced-account-label">
+															<p>Status</p>
+														</div> 
+													</div>
+
+													<?php
+														$sellernextShopIds     = get_option( 'ced_amazon_sellernext_shop_ids', array() );
+														if( !empty( $sellernextShopIds ) ){
+															foreach( $ced_amazon_sellernext_shop_ids as $sellernextId => $sellernextData ){ 
+
+																$current_marketplace_id  = isset( $sellernextData['marketplace_id'] ) ? $sellernextData['marketplace_id'] : '';
+																$current_marketplace_name = isset( $ced_amazon_regions_info[$current_marketplace_id] ) && isset( $ced_amazon_regions_info[$current_marketplace_id]['country_name'] ) ? $ced_amazon_regions_info[$current_marketplace_id]['country_name'] : '';
+                                                                    
+
+																?>
+																
+																	<?php
+
+																	if( 3 < $sellernextData['ced_amz_current_step'] ){ 
+																		$url = get_admin_url() . 'admin.php?page=sales_channel&channel=amazon&section=overview&user_id='. $sellernextId . '&seller_id=' . $sellernextData['ced_mp_seller_key'];
+					
+																		?>
+																		<!-- <a href="<?php echo esc_url($url); ?>" >  -->
+																			<div class="ced-account-body">
+																				<div class="ced-acount-body-label">
+																				<p><?php echo $current_marketplace_name; ?></p>
+																				</div>
+																				<div class="ced-connected-button-wrap">
+																					<a class="ced-connected-link"><span class="ced-circle"></span>Onboarding Complete</a>
+																				</div>
+																			</div>
+																		<!-- </a> -->
+
+																		<?php
+
+																	} else{
+
+																		$current_step = $sellernextData['ced_amz_current_step'];
+																		if ( empty( $current_step ) ) {
+																			$urlKey = 'section=setup-amazon';
+																		} elseif ( 1 == $current_step ) {
+																			$urlKey = 'section=setup-amazon&part=amazon-options';
+																		} elseif ( 2 == $current_step ) {
+																			$urlKey = 'section=setup-amazon&part=settings';
+																		} elseif ( 3 == $current_step ) {
+																			$urlKey = 'section=setup-amazon&part=configuration';
+																		} else {
+																			//$part = 'section=settings&user_id=' . $user_id;
+																			$part = 'section=overview';
+																		}
+																		$url = get_admin_url() . 'admin.php?page=sales_channel&channel=amazon'. $urlKey . '&user_id='. $sellernextId . '&seller_id=' . $sellernextData['ced_mp_seller_key'];
+						
+																		?>
+                                                                        <a href="<?php echo esc_url($url); ?>" >
+																			<div class="ced-account-body">
+																				<div class="ced-acount-body-label">
+																					<p><?php echo $current_marketplace_name; ?></p>
+																				</div>
+																				<div class="ced-pending-button-wrap">
+																					<a class="ced-pending-link"><span class="ced-circle"></span>Onboarding Pending</a>
+																				</div>
+																			</div>
+																		</a>
+
+																		<?php
+
+																	}
+
+                                                                    ?>
+																	
+																
+																<?php
+															}
+
+														}
+
+                                                    ?>
+
+									
+												</div>
+											</section>
+										</td>
+									</tr>
+									<?php
+
+									}
+
+								}
+							?>
 
 						<?php } ?>	
 
@@ -169,11 +291,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 		jQuery(function () {
 			jQuery('.woocommerce-importer-done-view-errors').on('click', function () {
 				jQuery('.wc-importer-error-log').slideToggle();
 				return false;
 			});
 		});
-	</script> -->
+	</script>
